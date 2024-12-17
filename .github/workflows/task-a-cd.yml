@@ -12,8 +12,8 @@ jobs:
           uses: actions/setup-python@v5
           with:
             python-version: '3.11'
+            cache: 'pip'
         - name: Install dependencies
-          cache: 'pip'
           run: |
             pip install -r ./task_a/requirements.txt
         - name: Run Pytest
