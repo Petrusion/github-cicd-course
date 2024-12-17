@@ -14,9 +14,11 @@ jobs:
             python-version: '3.11'
             cache: 'pip'
         - name: Install dependencies
-          run: |
-            pip install -r ./task_a/requirements.txt
+          run: pip install -r ./task_a/requirements.txt
         - name: Run Pytest
-          run: |
-            pytest ./task_a/task_a.py
-        # TODO: run pytest
+          run: pytest --html=report.html ./task_a/task_a.py
+        - uses: actions/upload-artifact@v4
+          with:
+            name: "pytest result"
+            path: ./report.html
+            if-no-files-found: 'warn'
