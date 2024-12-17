@@ -1,13 +1,16 @@
 name: task-b manual
 
-on: 
+on:
   workflow_dispatch:
     inputs:
       message:
         description: 'Message'
         required: true
         default: 'Hello CI/CD'
-      # TODO: add tag input
+      tag:
+        description: 'tag'
+        required: true
+        default: '1.0.0'
 permissions:
   contents: read
   packages: write
@@ -35,5 +38,9 @@ jobs:
         with:
           images: ghcr.io/${{ github.repository }}
           tags: type=ref,event=tag
-      # TODO: build and push docker image
+      - name: "Build and push docker image"
+        uses: docker/build-push-action@v6
+        with:
+          push: true
+          tags: ghcr.io/${{ github.repository }}:${{ inputs.tag }}
   # TODO: Add test job
