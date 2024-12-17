@@ -1,6 +1,6 @@
 name: task-a cd
 
-on: [push]
+on: [public, pull_request]
 
 jobs:
   test:
@@ -25,7 +25,7 @@ jobs:
         - name: Install dependencies
           run: pip install -r ./task_a/requirements.txt
         - name: Run Pytest
-          run: pytest --html=report.html ./task_a/task_a.py
+          run: pytest --html=report-${{matrix.os}}.html ./task_a/task_a.py
         - uses: actions/upload-artifact@v4
           with:
             name: "pytest result"
